@@ -10,23 +10,27 @@ I'm a robotics engineer with a passion for autonomy, real-time control systems, 
 - **Tools:** Docker, Git, Redis, MQTT
 - **Hardware:** PLCs, LiDARs, IMUs, Motor Drivers
 
-## 📂 Featured Projects
-### 🦾 [Project Name](https://github.com/yourusername/project-repo)
-> A short description of what it does and what tech it uses.
-
-- 🔧 Tech: ROS2, Modbus, Redis
-- 📽 Demo: [YouTube link]
-- 📘 Blog: [LinkedIn/Medium article]
-
-(repeat for other projects...)
-
 ## 💼 Experience
 - **Senior Research Assistant @ ROAR Labs, Singapore University of Technology and Design**
   - Designed real-time control systems using ROS2 and PLCs
   - Led development of autonomous cleaning robots
 - **Visiting Researcher @ ROAR Labs, Singapore University of Technology and Design**
   - Built a visual SLAM pipeline and real-time navigation stack
-
+## 🔬 Publications 
+- Data-Driven Selection of Decontamination Robot Locomotion Based on Terrain Compatibility Scoring Models. MDPI
+Applied Sciences, 2025
+- Payload-and Energy-Aware Tactical Allocation Loop-Based Path-Planning Algorithm for Urban Fumigation Robots.
+MDPI Mathematics, 2025 13(6), 950.
+- Boa Fumigator: An Intelligent Robotic Approach for Mosquito Control. Technologies - MDPI, 2024.
+- Robot-Aided Human Evacuation Optimal Path Planning for Fire Drill in Buildings. Journal of Building Engineering -
+Elsevier. 2023
+- Multirobot Formation with Sensor Fusion-Based Localization in Unknown Environment. Symmetry - MDPI, 2021
+- Towards a Cloud-Based System Architecture for Drain Inspection Robots. 2021 4th International Conference on
+Information and Communications Technology (ICOIACT).
+- Test Setup for Analysis of Torque on DC Motor Shaft and its Possible Applications. International Conference on
+Communication and Signal Processing (ICCSP), 2019
+- Compact, Handheld Dosa Bot Design”. 2nd International Conference on Trends in Electronics and Informatics (ICOEI),
+2018.
 ## 📚 Education
 - M.Eng in Robotics, [Singapore University of Technology and Design, Singapore]
 - M.Sc in Nano Electronics Engineering Dessign, [Chang Gung university, Taiwan]
