@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sriniketh Konduri — Robotics Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-card: #16161f;
+            --bg-card-hover: #1c1c28;
+            --accent: #00e5a0;
+            --accent-dim: #00e5a020;
+            --accent-mid: #00e5a060;
+            --text-primary: #e8e8ef;
+            --text-secondary: #8888a0;
+            --text-muted: #55556a;
+            --border: #222233;
+            --border-light: #2a2a3d;
+            --font-display: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-dim) var(--bg-primary);
+        }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ---- GRID BACKGROUND ---- */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .grid-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--accent-dim), transparent);
+        }
+
+        /* ---- NAV ---- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: #0a0a0fcc;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        /* ---- SECTIONS ---- */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 5rem;
+        }
+
+        .hero-content {
+            width: 100%;
+        }
+
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.2s forwards;
+        }
+
+        .hero-name {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.4s forwards;
+        }
+
+        .hero-name .highlight {
+            background: linear-gradient(135deg, var(--accent), #00b8d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.8;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.6s forwards;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.8s forwards;
+        }
+
+        .meta-item {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .meta-item span {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 1s forwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            letter-spacing: 0.03em;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px var(--accent-mid);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ---- SECTION HEADERS ---- */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-number {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ---- ABOUT ---- */
+        #about {
+            padding: 6rem 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .about-text {
+            color: var(--text-secondary);
+            font-weight: 300;
+            font-size: 1rem;
+        }
+
+        .about-text p + p {
+            margin-top: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent-mid);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: var(--font-mono);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* ---- SKILLS ---- */
+        #skills {
+            padding: 6rem 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent-mid);
+            background: var(--bg-card-hover);
+            transform: translateY(-3px);
+        }
+
+        .skill-card:hover::before { opacity: 1; }
+
+        .skill-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 0.3rem 0.6rem;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        /* ---- EXPERIENCE ---- */
+        #experience {
+            padding: 6rem 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--accent), var(--border), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent-mid);
+            transform: translateX(-4px);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-role {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-company {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-weight: 300;
+            font-size: 0.95rem;
+        }
+
+        /* ---- PROJECTS ---- */
+        #projects {
+            padding: 6rem 0;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-mid);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px #00000040;
+        }
+
+        .project-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .project-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 300;
+            margin-bottom: 1.25rem;
+        }
+
+        .project-funding {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            padding: 0.4rem 0.7rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .project-video {
+            margin-top: 1.25rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #000;
+            position: relative;
+        }
+
+        .project-video video {
+            width: 100%;
+            display: block;
+            border-radius: 7px;
+            max-height: 220px;
+            object-fit: cover;
+        }
+
+        .video-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 2rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px dashed var(--border-light);
+            border-radius: 8px;
+            margin-top: 1.25rem;
+            cursor: default;
+        }
+
+        .video-placeholder span {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.03em;
+        }
+
+        .video-placeholder svg {
+            opacity: 0.4;
+        }
+
+        /* ---- PUBLICATIONS ---- */
+        #publications {
+            padding: 6rem 0;
+        }
+
+        .pub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .pub-item {
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .pub-item:hover {
+            border-color: var(--accent-mid);
+        }
+
+        .pub-venue {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .pub-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        /* ---- EDUCATION ---- */
+        #education {
+            padding: 6rem 0;
+        }
+
+        .edu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .edu-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+
+        .edu-card:hover { border-color: var(--accent-mid); }
+
+        .edu-degree {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .edu-school {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .edu-meta {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* ---- CONTACT ---- */
+        #contact {
+            padding: 6rem 0 8rem;
+        }
+
+        .contact-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-box p {
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* ---- ANIMATIONS ---- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .about-grid { grid-template-columns: 1fr; }
+            .hero-meta { gap: 1rem; }
+            .hero-links { flex-direction: column; }
+            .contact-links { flex-direction: column; align-items: center; }
+            .container { padding: 0 1.25rem; }
+        }
+
+        /* ---- MOBILE NAV ---- */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text-secondary);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--bg-primary);
+                border-bottom: 1px solid var(--border);
+                padding: 1rem 2rem;
+                gap: 1rem;
+            }
+            .nav-links.open { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-logo">sriniketh.k</div>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container hero-content">
+        <div class="hero-label">// Senior Robotics Software Engineer</div>
+        <h1 class="hero-name">
+            Sriniketh<br><span class="highlight">Konduri</span>
+        </h1>
+        <p class="hero-subtitle">
+            Building autonomy systems that navigate the real world — from sensor calibration and 3D SLAM to full-stack robot deployment in GPS-denied, outdoor environments.
+        </p>
+        <div class="hero-meta">
+            <div class="meta-item">location <span>Singapore</span></div>
+            <div class="meta-item">experience <span>5+ years</span></div>
+            <div class="meta-item">publications <span>6 peer-reviewed</span></div>
+            <div class="meta-item">focus <span>Calibration · SLAM · Perception</span></div>
+        </div>
+        <div class="hero-links">
+            <a href="/cdn-cgi/l/email-protection#dcb7b3b2b8a9aeb5afaeb5b2b5b7b9a8b4eeee9cbbb1bdb5b0f2bfb3b1" class="btn btn-primary">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Get in Touch
+            </a>
+            <a href="https://linkedin.com/in/sriniketh-konduri" target="_blank" class="btn btn-outline">LinkedIn</a>
+            <a href="https://github.com/KonduriSriniketh" target="_blank" class="btn btn-outline">GitHub</a>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-number">01</span>
+            <h2 class="section-title">About</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <p>I'm a robotics engineer focused on the problems that make autonomous systems actually work in the real world — sensor calibration, SLAM, localization, and navigation. My work sits at the intersection of algorithm design and field deployment, turning probabilistic models into robots that can reliably operate outdoors.</p>
+                <p>At SUTD, I've led the autonomy stack across multiple government-funded robots, from a SGD 2.2M outdoor decontamination platform to multi-robot surveillance systems. Every project has demanded solving real state-estimation failures on deformable terrain, in GPS-denied conditions, with production-grade reliability.</p>
+                <p>I write primarily in C++ and Python within ROS2, and I care deeply about clean architecture, rigorous testing, and software that can survive field deployment.</p>
+            </div>
+            <div class="stats-grid reveal">
+                <div class="stat-card">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Years in Robotics</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Peer-Reviewed Papers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Robot Platforms Deployed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.7M</div>
+                    <div class="stat-label">SGD in Funded Projects</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-number">02</span>
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card reveal">
+                <div class="skill-icon">⚙️</div>
+                <h3>Calibration</h3>
+                <div class="skill-tags">
+                    <span class="tag">LiDAR–IMU Extrinsic</span>
+                    <span class="tag">Camera Intrinsic/Extrinsic</span>
+                    <span class="tag">LiDAR–Camera Cross-Modal</span>
+                    <span class="tag">Drift Validation</span>
+                </div>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon">🗺️</div>
+                <h3>SLAM & Localization</h3>
+                <div class="skill-tags">
+                    <span class="tag">LIO-SAM</span>
+                    <span class="tag">Fast-LIO</span>
+                    <span class="tag">HDL Graph SLAM</span>
+                    <span class="tag">NDT</span>
+                    <span class="tag">AMCL</span>
+                    <span class="tag">2D/3D LiDAR SLAM</span>
+                </div>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon">📡</div>
+                <h3>Sensors & Perception</h3>
+                <div class="skill-tags">
+                    <span class="tag">Ouster / Velodyne LiDAR</span>
+                    <span class="tag">9-DOF IMU</span>
+                    <span class="tag">RGB/Depth Cameras</span>
+                    <span class="tag">PCL</span>
+                    <span class="tag">Open3D</span>
+                    <span class="tag">OpenCV</span>
+                </div>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon">🤖</div>
+                <h3>Frameworks & Navigation</h3>
+                <div class="skill-tags">
+                    <span class="tag">ROS2</span>
+                    <span class="tag">Nav2</span>
+                    <span class="tag">Behavior Trees</span>
+                    <span class="tag">OpenNav Coverage</span>
+                    <span class="tag">DWB / MPPI</span>
+                </div>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon">🧠</div>
+                <h3>Deep Learning</h3>
+                <div class="skill-tags">
+                    <span class="tag">PyTorch</span>
+                    <span class="tag">CUDA</span>
+                    <span class="tag">YOLO</span>
+                    <span class="tag">Semantic Segmentation</span>
+                    <span class="tag">Jetson Xavier/Orin</span>
+                </div>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon">🔧</div>
+                <h3>Languages & DevOps</h3>
+                <div class="skill-tags">
+                    <span class="tag">C++</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">Gazebo</span>
+                    <span class="tag">Linux</span>
+                    <span class="tag">Git</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-number">03</span>
+            <h2 class="section-title">Experience</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-date">OCT 2022 — PRESENT</div>
+                <div class="timeline-role">Robotics Software Engineer (Senior Research Assistant)</div>
+                <div class="timeline-company">Singapore University of Technology and Design (SUTD)</div>
+                <div class="timeline-desc">
+                    Designing and deploying ROS1/ROS2 autonomy stacks for indoor/outdoor ground robots across government-funded projects. Full ownership from architecture through field demonstration — sensor calibration pipelines, 3D LiDAR SLAM systems, real-time perception, and navigation in GPS-denied environments. Co-authored 6 publications and mentored graduate researchers.
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-date">DEC 2019 — MAR 2021</div>
+                <div class="timeline-role">Visiting Research Fellow</div>
+                <div class="timeline-company">Singapore University of Technology and Design (SUTD)</div>
+                <div class="timeline-desc">
+                    Spearheaded autonomy and control software for RAPTOR, a multi-robot outdoor surveillance system (SGD 550k, ST Engineering). Developed novel orientation estimation for beacon-based localization and built full ROS navigation optimized for GPS-denied operation under strict sensor constraints.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-number">04</span>
+            <h2 class="section-title">Key Projects</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card reveal">
+                <div class="project-name">Osprey</div>
+                <div class="project-subtitle">OUTDOOR DECONTAMINATION ROBOT</div>
+                <div class="project-desc">Technical lead for calibration, localization, and autonomy on an outdoor tracked robot. Built LiDAR–IMU calibration pipelines, replaced wheel odometry with Fast-LIO fusion, and delivered 2.5D navigation with Nav2 across four cleaning modes.</div>
+                <span class="project-funding">SGD 2.2M · National Environment Agency</span>
+                <div class="project-video">
+                    <video controls preload="metadata" poster="">
+                        <source src="videos/osprey.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-name">Falcon X</div>
+                <div class="project-subtitle">FALSE CEILING INSPECTOR</div>
+                <div class="project-desc">Indoor SLAM-based autonomous inspection robot. 3D LiDAR ceiling reconstruction with AMCL localization and real-time anomaly detection using PCL KDTree comparison between reference and observation point clouds.</div>
+                <div class="project-video">
+                    <video controls preload="metadata">
+                        <source src="videos/falcon-x.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-name">Meerkat</div>
+                <div class="project-subtitle">ROBOT INCLUSIVITY INDEX EVALUATION</div>
+                <div class="project-desc">Independently developed SLAM and navigation for structured indoor environments. Real-time YOLO detection on Jetson (60k+ images) integrated into global costmap for hazard marking.</div>
+                <span class="project-funding">SGD 2.5M · A*STAR</span>
+                <div class="project-video">
+                    <video controls preload="metadata">
+                        <source src="videos/meerkat.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-name">RAPTOR</div>
+                <div class="project-subtitle">MULTI-ROBOT SURVEILLANCE SYSTEM</div>
+                <div class="project-desc">Led autonomy for a low-cost multi-robot outdoor surveillance platform. Novel orientation estimation for beacon-based localization enabling precise swarm coordination in GPS-denied environments.</div>
+                <span class="project-funding">SGD 550K · ST Engineering</span>
+                <div class="project-video">
+                    <video controls preload="metadata">
+                        <source src="videos/raptor.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-name">Koala</div>
+                <div class="project-subtitle">BI-MANUAL MOBILE ROBOT</div>
+                <div class="project-desc">ROS autonomy stack with 2D navigation and 3D LiDAR localization for holonomic drive. Integrated deep learning models for real-time plant health analysis from onboard vision streams.</div>
+                <div class="project-video">
+                    <video controls preload="metadata">
+                        <source src="videos/koala.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-name">Siren</div>
+                <div class="project-subtitle">MASTER'S THESIS · EVACUATION PATH PLANNING</div>
+                <div class="project-desc">Genetic algorithm-based optimized evacuation path planning using robot-detected human positions and velocities. Published in Journal of Building Engineering — Elsevier, 2023.</div>
+                <div class="project-video">
+                    <video controls preload="metadata">
+                        <source src="videos/siren.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-number">05</span>
+            <h2 class="section-title">Publications</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="pub-list">
+            <div class="pub-item reveal">
+                <div class="pub-venue">MDPI APPLIED SCIENCES · 2025</div>
+                <div class="pub-title">Data-Driven Selection of Decontamination Robot Locomotion Based on Terrain Compatibility Scoring Models</div>
+            </div>
+            <div class="pub-item reveal">
+                <div class="pub-venue">MDPI MATHEMATICS · 2025</div>
+                <div class="pub-title">Payload-and Energy-Aware Tactical Allocation Loop-Based Path-Planning Algorithm for Urban Fumigation Robots</div>
+            </div>
+            <div class="pub-item reveal">
+                <div class="pub-venue">MDPI TECHNOLOGIES · 2024</div>
+                <div class="pub-title">Boa Fumigator: An Intelligent Robotic Approach for Mosquito Control</div>
+            </div>
+            <div class="pub-item reveal">
+                <div class="pub-venue">ELSEVIER — JOURNAL OF BUILDING ENGINEERING · 2023</div>
+                <div class="pub-title">Robot-Aided Human Evacuation Optimal Path Planning for Fire Drill in Buildings</div>
+            </div>
+            <div class="pub-item reveal">
+                <div class="pub-venue">MDPI SYMMETRY · 2021</div>
+                <div class="pub-title">Multirobot Formation with Sensor Fusion-Based Localization in Unknown Environment</div>
+            </div>
+            <div class="pub-item reveal">
+                <div class="pub-venue">ICOIACT · 2021</div>
+                <div class="pub-title">Towards a Cloud-Based System Architecture for Drain Inspection Robots</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-number">06</span>
+            <h2 class="section-title">Education</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="edu-grid">
+            <div class="edu-card reveal">
+                <div class="edu-degree">M.Eng, Robotics</div>
+                <div class="edu-school">Singapore University of Technology and Design</div>
+                <div class="edu-meta">2021 – 2022 · Full MOE Scholarship</div>
+            </div>
+            <div class="edu-card reveal">
+                <div class="edu-degree">M.Sc, Nano Electronic Engineering & Design</div>
+                <div class="edu-school">Chang Gung University, Taiwan</div>
+                <div class="edu-meta">2021 – 2022 · GPA: 4.0 / 4.0</div>
+            </div>
+            <div class="edu-card reveal">
+                <div class="edu-degree">B.Tech, Electronics & Communication</div>
+                <div class="edu-school">Amrita Vishwa Vidyapeetham, India</div>
+                <div class="edu-meta">2015 – 2019 · GPA: 9.19/10 · Rank 8/300</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AWARDS (compact) -->
+<section id="awards" style="padding: 4rem 0;">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-number">07</span>
+            <h2 class="section-title">Awards</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="skills-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            <div class="skill-card reveal" style="padding: 1.5rem;">
+                <h3 style="font-size: 0.95rem;">🎓 Full MOE Scholarship</h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">Ministry of Education, Singapore — Master's Degree</p>
+            </div>
+            <div class="skill-card reveal" style="padding: 1.5rem;">
+                <h3 style="font-size: 0.95rem;">🏆 NSK Sponsor Award</h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">Best Robot Design — IDC ROBOCON-18, Tokyo</p>
+            </div>
+            <div class="skill-card reveal" style="padding: 1.5rem;">
+                <h3 style="font-size: 0.95rem;">📜 Certificate of Excellence</h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">Amrita Vishwa Vidyapeetham</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-number">08</span>
+            <h2 class="section-title">Contact</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="contact-box reveal">
+            <h3>Let's build something that moves.</h3>
+            <p>Open to opportunities in autonomous systems, SLAM, calibration, and perception engineering.</p>
+            <div class="contact-links">
+                <a href="/cdn-cgi/l/email-protection#b2d9dddcd6c7c0dbc1c0dbdcdbd9d7c6da8080f2d5dfd3dbde9cd1dddf" class="btn btn-primary">
+                    <span class="__cf_email__" data-cfemail="711a1e1f150403180203181f181a140519434331161c10181d5f121e1c">[email&#160;protected]</span>
+                </a>
+                <a href="https://linkedin.com/in/sriniketh-konduri" target="_blank" class="btn btn-outline">LinkedIn</a>
+                <a href="https://github.com/KonduriSriniketh" target="_blank" class="btn btn-outline">GitHub</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 Sriniketh Konduri · Built with purpose.</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal
