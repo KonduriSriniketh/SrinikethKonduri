@@ -1,5 +1,7 @@
 # 👋 Hi, I'm Sriniketh Konduri
 
+### 🌐 [**Portfolio — kondurisriniketh.github.io/SrinikethKonduri**](https://kondurisriniketh.github.io/SrinikethKonduri/)
+
 ## 🚀 About Me
 I'm a robotics engineer with a passion for autonomy, real-time control systems, and intelligent automation. 
 
@@ -33,4 +35,4 @@ I'm a robotics engineer with a passion for autonomy, real-time control systems, 
 ## 📫 Contact
 - 📧 Email: kondurisriniketh22@gmail.com
 - 🔗 [LinkedIn](https://linkedin.com/in/sriniketh-konduri)
-- 🌐 [Website](https://yourdomain.com) *(optional)*
+- 🌐 [Portfolio](https://kondurisriniketh.github.io/SrinikethKonduri/)
